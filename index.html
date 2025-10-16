@@ -220,14 +220,14 @@
     </div>
 
     <!-- AI Insights Modal -->
-    <div id="insightsModal" class="modal hidden">
+    <div id="insightsModal" class="modal hidden" onclick="closeInsightsOnBackdrop(event)">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">
                     <i data-lucide="brain" style="width: 32px; height: 32px; color: #c084fc;"></i>
                     AI Insights & Analysis
                 </h2>
-                <button class="btn-close" onclick="closeInsights()">
+                <button class="btn-close" onclick="closeInsights()" type="button">
                     <i data-lucide="x" style="width: 24px; height: 24px;"></i>
                 </button>
             </div>
@@ -564,6 +564,12 @@
 
         function closeInsights() {
             document.getElementById('insightsModal').classList.add('hidden');
+        }
+
+        function closeInsightsOnBackdrop(event) {
+            if (event.target.id === 'insightsModal') {
+                closeInsights();
+            }
         }
 
         function generateAIInsights() {
