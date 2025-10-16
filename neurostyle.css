@@ -1,0 +1,724 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Auth Screens */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .auth-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #c084fc 0%, #f9a8d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid #475569;
+            border-radius: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #a855f7;
+            background: rgba(51, 65, 85, 0.7);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        .btn-google {
+            background: white;
+            color: #1f2937;
+            margin-top: 1rem;
+        }
+
+        .btn-google:hover {
+            background: #f3f4f6;
+            transform: scale(1.02);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #475569;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        .auth-link a {
+            color: #a855f7;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .auth-link a:hover {
+            color: #c084fc;
+        }
+
+        /* Main App */
+        .hidden {
+            display: none !important;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            padding: 0.75rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text h1 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #c084fc 0%, #f9a8d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-insights {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-insights:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-logout {
+            padding: 0.75rem 1.25rem;
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid #475569;
+            border-radius: 0.75rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-tab.active {
+            background: #9333ea;
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(71, 85, 105, 0.5);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1.25rem;
+            border-radius: 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .habit-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .habit-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .habit-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .habit-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .habit-icon {
+            padding: 0.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .habit-name {
+            font-weight: 600;
+        }
+
+        .habit-streak {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .days-tracker {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .day-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .day-item:hover {
+            background: rgba(71, 85, 105, 0.5);
+        }
+
+        .day-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .day-box {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .day-box.completed {
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+        }
+
+        .day-box.empty {
+            background: rgba(71, 85, 105, 0.5);
+            border: 1px solid #475569;
+        }
+
+        .day-num {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .add-habit-btn {
+            width: 100%;
+            padding: 1.25rem;
+            border: 2px dashed #475569;
+            border-radius: 1rem;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .add-habit-btn:hover {
+            border-color: #a855f7;
+            color: #c084fc;
+        }
+
+        .add-habit-form {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            margin-top: 1rem;
+        }
+
+        .add-habit-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(71, 85, 105, 0.5);
+            border: 1px solid #475569;
+            border-radius: 0.75rem;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .add-habit-input:focus {
+            outline: none;
+            border-color: #a855f7;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 0.625rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-add {
+            background: #9333ea;
+            color: white;
+        }
+
+        .btn-cancel {
+            background: #475569;
+            color: white;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 42rem;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(168, 85, 247, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .btn-close {
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-close:hover {
+            background: #475569;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-card {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+        }
+
+        .insight-value {
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+
+        .insight-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .insight-detail {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        .correlation-section,
+        .recommendation-section {
+            background: rgba(71, 85, 105, 0.3);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .correlation-item {
+            margin-bottom: 1rem;
+        }
+
+        .correlation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .correlation-text {
+            font-size: 0.875rem;
+        }
+
+        .correlation-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4ade80;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.5rem;
+            background: rgba(71, 85, 105, 0.5);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+            border-radius: 9999px;
+        }
+
+        .recommendation-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(71, 85, 105, 0.3);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-number {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            background: #9333ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+        }
+
+        .recommendation-text {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 0.5rem 0;
+        }
+
+        .analytics-section {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1.25rem;
+        }
+
+        .habit-performance {
+            margin-bottom: 1.5rem;
+        }
+
+        .performance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .performance-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .performance-rate {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .days-tracker {
+                gap: 0.25rem;
+            }
+
+            .day-box {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+        }
