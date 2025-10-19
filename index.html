@@ -7,11 +7,9 @@
     <title>NeuroHabit - AI-Driven Habit Analytics</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
     <style>
-        
     </style>
 </head>
 <body>
-    <!-- Sign In Screen -->
     <div id="signInScreen" class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
@@ -57,7 +55,6 @@
         </div>
     </div>
 
-    <!-- Sign Up Screen -->
     <div id="signUpScreen" class="auth-container hidden">
         <div class="auth-card">
             <div class="auth-header">
@@ -107,7 +104,6 @@
         </div>
     </div>
 
-    <!-- Main App -->
     <div id="mainApp" class="container hidden">
         <div class="header">
             <div class="logo-section">
@@ -143,7 +139,6 @@
             </button>
         </div>
 
-        <!-- Tracker View -->
         <div id="trackerView" class="view-content">
             <div class="stats-grid">
                 <div class="stat-card">
@@ -176,7 +171,6 @@
             </div>
         </div>
 
-        <!-- Analytics View -->
         <div id="analyticsView" class="view-content hidden">
             <div class="analytics-section">
                 <h2 class="section-header">
@@ -198,7 +192,6 @@
             </div>
         </div>
 
-        <!-- Calendar View -->
         <div id="calendarView" class="view-content hidden">
             <div class="analytics-section">
                 <h2 class="section-header">
@@ -219,7 +212,69 @@
         </div>
     </div>
 
-    <!-- AI Insights Modal -->
+    <!-- Google Account Selection Modal -->
+    <div id="googleAccountModal" class="google-modal hidden" onclick="closeGoogleModalOnBackdrop(event)">
+        <div class="google-modal-content">
+            <div class="google-modal-header">
+                <div class="google-logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span class="google-title">Login dengan Google</span>
+                </div>
+            </div>
+            
+            <div class="google-modal-body">
+                <div class="google-context">
+                    <h2 class="google-main-title">Pilih akun</h2>
+                    <p class="google-subtitle">Lanjutkan ke <span class="app-name">NeuroHabit</span></p>
+                </div>
+                
+                <div class="google-accounts">
+                    <div class="google-account-item" onclick="selectGoogleAccount('kimzi2549@gmail.com', 'Hakim Arrazi')">
+                        <div class="account-avatar">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM0Mjg1RjQiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+" alt="Hakim Arrazi" />
+                        </div>
+                        <div class="account-info">
+                            <div class="account-name">Hakim Arrazi</div>
+                            <div class="account-email">kimzi2549@gmail.com</div>
+                        </div>
+                    </div>
+                    
+                    <div class="google-account-item" onclick="selectGoogleAccount('bugbuster132@gmail.com', 'BugBuster')">
+                        <div class="account-avatar">
+                            <div class="default-avatar">B</div>
+                        </div>
+                        <div class="account-info">
+                            <div class="account-name">BugBuster</div>
+                            <div class="account-email">bugbuster132@gmail.com</div>
+                        </div>
+                    </div>
+                    
+                    <div class="google-account-item" onclick="useAnotherAccount()">
+                        <div class="account-avatar">
+                            <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+                        </div>
+                        <div class="account-info">
+                            <div class="account-name">Gunakan akun lain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="google-modal-footer">
+                <p class="google-disclaimer">
+                    Sebelum menggunakan aplikasi ini, Anda dapat meninjau 
+                    <a href="#" class="privacy-link">kebijakan privasi</a> dan 
+                    <a href="#" class="terms-link">persyaratan layanan</a> NeuroHabit.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div id="insightsModal" class="modal hidden" onclick="closeInsightsOnBackdrop(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -264,16 +319,188 @@
     </div>
 
     <script>
+        // === BAGIAN YANG DIPERBAIKI ===
+
         // App State
         let currentUser = null;
         let currentView = 'tracker';
-        let habits = [
-            { id: 1, name: 'Morning Exercise', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
-            { id: 2, name: 'Read 30 mins', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} },
-            { id: 3, name: 'Meditation', icon: '🧘', color: 'bg-green-500', colorHex: '#22c55e', streak: 7, completions: {} },
-            { id: 4, name: 'Drink Water', icon: '💧', color: 'bg-cyan-500', colorHex: '#06b6d4', streak: 2, completions: {} },
-            { id: 5, name: 'Sleep Early', icon: '😴', color: 'bg-indigo-500', colorHex: '#6366f1', streak: 4, completions: {} }
-        ];
+        // Mengambil data pengguna dari localStorage atau membuat array kosong jika belum ada
+        let users = JSON.parse(localStorage.getItem('neuroHabitUsers')) || [];
+
+        // Data habits sekarang akan menjadi properti dari setiap pengguna
+        let habits = [];
+
+        // Auth Functions (Logika Baru)
+        function handleSignIn(event) {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+
+            // Cari pengguna berdasarkan email
+            const user = users.find(u => u.email === email);
+
+            // Validasi: Cek apakah pengguna ada dan password cocok
+            if (user && user.password === password) {
+                currentUser = user;
+                // Muat data habits milik pengguna yang login
+                habits = currentUser.habits || [
+                    // Data default jika pengguna baru
+                    { id: 1, name: 'Morning Exercise', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
+                    { id: 2, name: 'Read 30 mins', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} }
+                ];
+                showMainApp();
+            } else {
+                alert('Email atau password salah. Silakan coba lagi.');
+            }
+            return false;
+        }
+
+        function handleSignUp(event) {
+            event.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+
+            // Validasi: Cek apakah email sudah terdaftar
+            if (users.find(u => u.email === email)) {
+                alert('Email ini sudah terdaftar. Silakan gunakan email lain atau sign in.');
+                return false;
+            }
+            
+            // Tambahkan pengguna baru ke array
+            const newUser = { name, email, password, habits: [] }; // Setiap user punya data habits sendiri
+            users.push(newUser);
+
+            // Simpan array pengguna yang sudah diperbarui ke localStorage
+            localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
+
+            alert('Akun berhasil dibuat! Silakan Sign In untuk melanjutkan.');
+            goToSignIn(); // Arahkan kembali ke halaman sign in
+            return false;
+        }
+
+        function handleGoogleSignIn() {
+            // Tampilkan modal pemilihan akun Google
+            document.getElementById('googleAccountModal').classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 0);
+        }
+
+        function handleGoogleSignUp() {
+            // Tampilkan modal pemilihan akun Google untuk sign up
+            document.getElementById('googleAccountModal').classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 0);
+        }
+
+        // Fungsi untuk memilih akun Google
+        function selectGoogleAccount(email, name) {
+            // Tutup modal
+            document.getElementById('googleAccountModal').classList.add('hidden');
+            
+            // Cari pengguna yang mendaftar dengan Google
+            let user = users.find(u => u.email === email && u.authMethod === 'google');
+
+            if (!user) {
+                // Jika akun belum terdaftar, buat akun baru
+                user = {
+                    name: name,
+                    email: email,
+                    authMethod: 'google',
+                    password: null,
+                    habits: [
+                        { id: 1, name: 'Morning Exercise', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
+                        { id: 2, name: 'Read 30 mins', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} }
+                    ]
+                };
+                users.push(user);
+                localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
+            }
+
+            // Login dengan akun yang dipilih
+            currentUser = user;
+            habits = currentUser.habits || [];
+            showMainApp();
+        }
+
+        // Fungsi untuk menggunakan akun lain
+        function useAnotherAccount() {
+            // Tutup modal
+            document.getElementById('googleAccountModal').classList.add('hidden');
+            
+            // Tampilkan prompt untuk email lain
+            const googleEmail = prompt("Silakan masukkan email Google Anda:");
+            if (!googleEmail) return;
+
+            // Cari pengguna yang mendaftar dengan Google
+            let user = users.find(u => u.email === googleEmail && u.authMethod === 'google');
+
+            if (!user) {
+                // Jika akun belum terdaftar, buat akun baru
+                user = {
+                    name: `Google User (${googleEmail.split('@')[0]})`,
+                    email: googleEmail,
+                    authMethod: 'google',
+                    password: null,
+                    habits: [
+                        { id: 1, name: 'Morning Exercise', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
+                        { id: 2, name: 'Read 30 mins', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} }
+                    ]
+                };
+                users.push(user);
+                localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
+            }
+
+            // Login dengan akun yang dipilih
+            currentUser = user;
+            habits = currentUser.habits || [];
+            showMainApp();
+        }
+
+        // Fungsi untuk menutup modal Google
+        function closeGoogleModalOnBackdrop(event) {
+            if (event.target.id === 'googleAccountModal') {
+                document.getElementById('googleAccountModal').classList.add('hidden');
+            }
+        }
+
+        function handleLogout() {
+            // Simpan data habits terakhir pengguna sebelum logout
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+                users[userIndex].habits = habits;
+                localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
+            }
+
+            currentUser = null;
+            habits = [];
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('signInScreen').classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 0);
+        }
+
+        // === AKHIR BAGIAN YANG DIPERBAIKI ===
+
+
+        // Fungsi lainnya tetap sama
+        function goToSignUp() {
+            document.getElementById('signInScreen').classList.add('hidden');
+            document.getElementById('signUpScreen').classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 0);
+        }
+
+        function goToSignIn() {
+            document.getElementById('signUpScreen').classList.add('hidden');
+            document.getElementById('signInScreen').classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 0);
+        }
+
+        function showMainApp() {
+            document.getElementById('signInScreen').classList.add('hidden');
+            document.getElementById('signUpScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            renderHabits();
+            updateStats();
+            setTimeout(() => lucide.createIcons(), 0);
+        }
 
         // Utility Functions
         function getCurrentDate() {
@@ -306,75 +533,18 @@
                 if (completions[dateStr]) {
                     streak++;
                 } else {
-                    break;
+                    // Cek hari kemarin, jika kosong maka streak berakhir
+                    const yesterday = new Date(today);
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    if (i === 0 && !completions[yesterday.toISOString().split('T')[0]]) {
+                        break;
+                    }
+                    if (i > 0) break;
                 }
             }
             return streak;
         }
 
-        // Auth Functions
-        function handleSignIn(event) {
-            event.preventDefault();
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            
-            if (email && password) {
-                currentUser = { email, name: email.split('@')[0] };
-                showMainApp();
-            }
-            return false;
-        }
-
-        function handleSignUp(event) {
-            event.preventDefault();
-            const name = document.getElementById('signUpName').value;
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-            
-            if (name && email && password) {
-                currentUser = { email, name };
-                showMainApp();
-            }
-            return false;
-        }
-
-        function handleGoogleSignIn() {
-            currentUser = { email: 'user@gmail.com', name: 'Google User' };
-            showMainApp();
-        }
-
-        function handleGoogleSignUp() {
-            currentUser = { email: 'user@gmail.com', name: 'Google User' };
-            showMainApp();
-        }
-
-        function goToSignUp() {
-            document.getElementById('signInScreen').classList.add('hidden');
-            document.getElementById('signUpScreen').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function goToSignIn() {
-            document.getElementById('signUpScreen').classList.add('hidden');
-            document.getElementById('signInScreen').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function handleLogout() {
-            currentUser = null;
-            document.getElementById('mainApp').classList.add('hidden');
-            document.getElementById('signInScreen').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function showMainApp() {
-            document.getElementById('signInScreen').classList.add('hidden');
-            document.getElementById('signUpScreen').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-            renderHabits();
-            updateStats();
-            setTimeout(() => lucide.createIcons(), 0);
-        }
 
         // Navigation
         function switchView(view) {
@@ -397,6 +567,11 @@
             const habitsList = document.getElementById('habitsList');
             const last7Days = getLast7Days();
             
+            if (habits.length === 0) {
+                habitsList.innerHTML = `<p style="text-align:center; color: #9ca3af; padding: 2rem 0;">Anda belum memiliki habit. Tambahkan satu untuk memulai!</p>`;
+                return;
+            }
+
             habitsList.innerHTML = habits.map(habit => `
                 <div class="habit-card">
                     <div class="habit-header">
@@ -434,6 +609,10 @@
         function toggleHabit(habitId, date) {
             const habit = habits.find(h => h.id === habitId);
             if (habit) {
+                // Inisialisasi completions jika belum ada
+                if (!habit.completions) {
+                    habit.completions = {};
+                }
                 habit.completions[date] = !habit.completions[date];
                 habit.streak = calculateStreak(habit.completions);
                 renderHabits();
@@ -442,9 +621,10 @@
         }
 
         function updateStats() {
+            if (!habits) return;
             const totalStreaks = habits.reduce((sum, h) => sum + h.streak, 0);
             const activeHabits = habits.length;
-            const todayCompletions = habits.filter(h => h.completions[getCurrentDate()]).length;
+            const todayCompletions = habits.filter(h => h.completions && h.completions[getCurrentDate()]).length;
             const todayProgress = activeHabits > 0 ? Math.round((todayCompletions / activeHabits) * 100) : 0;
             
             document.getElementById('totalStreaks').textContent = totalStreaks;
@@ -455,9 +635,16 @@
         function renderAnalytics() {
             const performanceList = document.getElementById('performanceList');
             const last7Days = getLast7Days();
+
+            if (habits.length === 0) {
+                 performanceList.innerHTML = `<p style="text-align:center; color: #9ca3af;">Tidak ada data untuk dianalisis.</p>`;
+                 document.getElementById('bestStreak').textContent = '0 days';
+                 document.getElementById('avgCompletion').textContent = '0%';
+                 return;
+            }
             
             performanceList.innerHTML = habits.map(habit => {
-                const completionRate = (last7Days.filter(day => habit.completions[day.date]).length / 7) * 100;
+                const completionRate = (last7Days.filter(day => habit.completions && habit.completions[day.date]).length / 7) * 100;
                 return `
                     <div class="habit-performance">
                         <div class="performance-header">
@@ -474,11 +661,11 @@
                 `;
             }).join('');
             
-            const bestStreak = Math.max(...habits.map(h => h.streak));
-            const avgCompletion = Math.round(habits.reduce((sum, h) => {
-                const rate = last7Days.filter(day => h.completions[day.date]).length / 7;
+            const bestStreak = Math.max(0, ...habits.map(h => h.streak));
+            const avgCompletion = habits.length > 0 ? Math.round(habits.reduce((sum, h) => {
+                const rate = last7Days.filter(day => h.completions && h.completions[day.date]).length / 7;
                 return sum + rate;
-            }, 0) / habits.length * 100);
+            }, 0) / habits.length * 100) : 0;
             
             document.getElementById('bestStreak').textContent = bestStreak + ' days';
             document.getElementById('avgCompletion').textContent = avgCompletion + '%';
@@ -492,8 +679,8 @@
                 const date = new Date();
                 date.setDate(date.getDate() - 14 + i);
                 const dateStr = date.toISOString().split('T')[0];
-                const completedToday = habits.filter(h => h.completions[dateStr]).length;
-                const intensity = completedToday / habits.length;
+                const completedToday = habits.length > 0 ? habits.filter(h => h.completions && h.completions[dateStr]).length : 0;
+                const intensity = habits.length > 0 ? completedToday / habits.length : 0;
                 
                 let bgColor = 'rgba(71, 85, 105, 0.3)';
                 if (intensity > 0.7) bgColor = '#9333ea';
@@ -573,17 +760,27 @@
         }
 
         function generateAIInsights() {
+            if (habits.length === 0) {
+                 document.getElementById('insightCompletionRate').textContent = '0%';
+                 document.getElementById('insightDetail').textContent = `0 of 0 in last 7 days`;
+                 document.getElementById('insightAvgStreak').textContent = '0';
+                 document.getElementById('insightBestHabit').textContent = `No habits yet`;
+                 document.getElementById('correlationsList').innerHTML = `<p class="correlation-item">Not enough data for correlations.</p>`;
+                 document.getElementById('recommendationsList').innerHTML = `<p class="recommendation-item">Add habits to get AI recommendations.</p>`;
+                 return;
+            }
+
             const last7Days = getLast7Days();
             let totalCompletions = 0;
             
             habits.forEach(habit => {
                 last7Days.forEach(day => {
-                    if (habit.completions[day.date]) totalCompletions++;
+                    if (habit.completions && habit.completions[day.date]) totalCompletions++;
                 });
             });
             
             const completionRate = ((totalCompletions / (habits.length * 7)) * 100).toFixed(1);
-            const bestHabit = habits.reduce((best, habit) => habit.streak > best.streak ? habit : best, habits[0]);
+            const bestHabit = habits.reduce((best, habit) => (habit.streak > best.streak ? habit : best), habits[0]);
             const avgStreak = (habits.reduce((sum, h) => sum + h.streak, 0) / habits.length).toFixed(1);
             
             document.getElementById('insightCompletionRate').textContent = completionRate + '%';
