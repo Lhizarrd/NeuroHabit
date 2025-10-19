@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroHabit - AI-Driven Habit Analytics</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client?hl=id" async defer></script>
     <style>
+        /* CSS Anda tetap di sini atau di file eksternal */
     </style>
 </head>
 <body>
@@ -39,15 +41,16 @@
                 <span>atau</span>
             </div>
 
-            <button type="button" class="btn btn-google" onclick="handleGoogleSignIn()">
+            <button type="button" class="btn btn-google" data-legacy="true" onclick="handleGoogleSignIn()">
                 <svg width="20" height="20" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
-                Continue with Google
+                Sign In with Google
             </button>
+            <div id="googleSignInContainer" style="margin-top: 8px;"></div>
 
             <div class="auth-link">
                 Belum punya akun? <a onclick="goToSignUp()">Sign Up</a>
@@ -88,15 +91,16 @@
                 <span>atau</span>
             </div>
 
-            <button type="button" class="btn btn-google" onclick="handleGoogleSignUp()">
+            <button type="button" class="btn btn-google" data-legacy="true" onclick="handleGoogleSignUp()">
                 <svg width="20" height="20" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
-                Sign Up with Google
+                Sign In with Google
             </button>
+            <div id="googleSignUpContainer" style="margin-top: 8px;"></div>
 
             <div class="auth-link">
                 Sudah punya akun? <a onclick="goToSignIn()">Sign In</a>
@@ -212,69 +216,6 @@
         </div>
     </div>
 
-    <!-- Google Account Selection Modal -->
-    <div id="googleAccountModal" class="google-modal hidden" onclick="closeGoogleModalOnBackdrop(event)">
-        <div class="google-modal-content">
-            <div class="google-modal-header">
-                <div class="google-logo">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    <span class="google-title">Login dengan Google</span>
-                </div>
-            </div>
-            
-            <div class="google-modal-body">
-                <div class="google-context">
-                    <h2 class="google-main-title">Pilih akun</h2>
-                    <p class="google-subtitle">Lanjutkan ke <span class="app-name">NeuroHabit</span></p>
-                </div>
-                
-                <div class="google-accounts">
-                    <div class="google-account-item" onclick="selectGoogleAccount('kimzi2549@gmail.com', 'Hakim Arrazi')">
-                        <div class="account-avatar">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM0Mjg1RjQiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+" alt="Hakim Arrazi" />
-                        </div>
-                        <div class="account-info">
-                            <div class="account-name">Hakim Arrazi</div>
-                            <div class="account-email">kimzi2549@gmail.com</div>
-                        </div>
-                    </div>
-                    
-                    <div class="google-account-item" onclick="selectGoogleAccount('bugbuster132@gmail.com', 'BugBuster')">
-                        <div class="account-avatar">
-                            <div class="default-avatar">B</div>
-                        </div>
-                        <div class="account-info">
-                            <div class="account-name">BugBuster</div>
-                            <div class="account-email">bugbuster132@gmail.com</div>
-                        </div>
-                    </div>
-                    
-                    <div class="google-account-item" onclick="useAnotherAccount()">
-                        <div class="account-avatar">
-                            <i data-lucide="user" style="width: 20px; height: 20px;"></i>
-                        </div>
-                        <div class="account-info">
-                            <div class="account-name">Gunakan akun lain</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="google-modal-footer">
-                <p class="google-disclaimer">
-                    Sebelum menggunakan aplikasi ini, Anda dapat meninjau 
-                    <a href="#" class="privacy-link">kebijakan privasi</a> dan 
-                    <a href="#" class="terms-link">persyaratan layanan</a> NeuroHabit.
-                </p>
-            </div>
-        </div>
-    </div>
-
     <div id="insightsModal" class="modal hidden" onclick="closeInsightsOnBackdrop(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -330,6 +271,76 @@
         // Data habits sekarang akan menjadi properti dari setiap pengguna
         let habits = [];
 
+        // KONFIGURASI GOOGLE - Ganti nilai di bawah dengan Client ID Anda dari Google Cloud Console
+        const GOOGLE_CLIENT_ID = '113527070387-jogik1kbo9ri7ncop1jv9pekso5ui6qn.apps.googleusercontent.com';
+        let googleInitialized = false;
+
+        function initGoogleIfNeeded() {
+            if (googleInitialized) return;
+            if (typeof google === 'undefined') return; // script belum siap
+            if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.startsWith('REPLACE_')) return; // belum dikonfigurasi
+
+            google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleGoogleCredentialResponse,
+                auto_select: false,
+                cancel_on_tap_outside: true
+            });
+            googleInitialized = true;
+
+            // Render tombol GIS di dua tempat (Sign In dan Sign Up)
+            const signInContainer = document.getElementById('googleSignInContainer');
+            const signUpContainer = document.getElementById('googleSignUpContainer');
+            if (signInContainer) {
+                google.accounts.id.renderButton(signInContainer, {
+                    type: 'standard',
+                    theme: 'outline',
+                    size: 'large',
+                    text: 'continue_with', // akan tampil sebagai "Lanjutkan dengan Google" karena hl=id
+                    shape: 'pill',
+                    logo_alignment: 'left'
+                });
+            }
+            if (signUpContainer) {
+                google.accounts.id.renderButton(signUpContainer, {
+                    type: 'standard',
+                    theme: 'outline',
+                    size: 'large',
+                    text: 'continue_with',
+                    shape: 'pill',
+                    logo_alignment: 'left'
+                });
+            }
+
+            // Sembunyikan tombol kustom jika GIS tersedia
+            document.querySelectorAll('.btn.btn-google[data-legacy="true"]').forEach(btn => btn.classList.add('hidden'));
+        }
+
+        function handleGoogleCredentialResponse(response) {
+            try {
+                const idToken = response && response.credential;
+                if (!idToken) return;
+                const payload = JSON.parse(atob(idToken.split('.')[1]));
+                const email = payload.email;
+                const name = payload.name || payload.given_name || `Google User`;
+
+                // Cari user; jika belum ada, buat akun dengan authMethod 'google'
+                let user = users.find(u => u.email === email && u.authMethod === 'google');
+                if (!user) {
+                    user = { name, email, authMethod: 'google', password: null, habits: [] };
+                    users.push(user);
+                    localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
+                }
+
+                currentUser = user;
+                habits = currentUser.habits || [];
+                showMainApp();
+            } catch (e) {
+                alert('Gagal memproses kredensial Google.');
+                // Optional: console.error(e);
+            }
+        }
+
         // Auth Functions (Logika Baru)
         function handleSignIn(event) {
             event.preventDefault();
@@ -380,86 +391,18 @@
         }
 
         function handleGoogleSignIn() {
-            // Tampilkan modal pemilihan akun Google
-            document.getElementById('googleAccountModal').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
+            initGoogleIfNeeded();
+            if (!googleInitialized) {
+                alert('Google Client ID belum dikonfigurasi.');
+                return;
+            }
+            // Tampilkan prompt One Tap; klik tombol ini akan memicu pemilihan akun
+            google.accounts.id.prompt();
         }
 
         function handleGoogleSignUp() {
-            // Tampilkan modal pemilihan akun Google untuk sign up
-            document.getElementById('googleAccountModal').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        // Fungsi untuk memilih akun Google
-        function selectGoogleAccount(email, name) {
-            // Tutup modal
-            document.getElementById('googleAccountModal').classList.add('hidden');
-            
-            // Cari pengguna yang mendaftar dengan Google
-            let user = users.find(u => u.email === email && u.authMethod === 'google');
-
-            if (!user) {
-                // Jika akun belum terdaftar, buat akun baru
-                user = {
-                    name: name,
-                    email: email,
-                    authMethod: 'google',
-                    password: null,
-                    habits: [
-                        { id: 1, name: 'Morning Exercise', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
-                        { id: 2, name: 'Read 30 mins', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} }
-                    ]
-                };
-                users.push(user);
-                localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
-            }
-
-            // Login dengan akun yang dipilih
-            currentUser = user;
-            habits = currentUser.habits || [];
-            showMainApp();
-        }
-
-        // Fungsi untuk menggunakan akun lain
-        function useAnotherAccount() {
-            // Tutup modal
-            document.getElementById('googleAccountModal').classList.add('hidden');
-            
-            // Tampilkan prompt untuk email lain
-            const googleEmail = prompt("Silakan masukkan email Google Anda:");
-            if (!googleEmail) return;
-
-            // Cari pengguna yang mendaftar dengan Google
-            let user = users.find(u => u.email === googleEmail && u.authMethod === 'google');
-
-            if (!user) {
-                // Jika akun belum terdaftar, buat akun baru
-                user = {
-                    name: `Google User (${googleEmail.split('@')[0]})`,
-                    email: googleEmail,
-                    authMethod: 'google',
-                    password: null,
-                    habits: [
-                        { id: 1, name: 'Morning Exercise', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
-                        { id: 2, name: 'Read 30 mins', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} }
-                    ]
-                };
-                users.push(user);
-                localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
-            }
-
-            // Login dengan akun yang dipilih
-            currentUser = user;
-            habits = currentUser.habits || [];
-            showMainApp();
-        }
-
-        // Fungsi untuk menutup modal Google
-        function closeGoogleModalOnBackdrop(event) {
-            if (event.target.id === 'googleAccountModal') {
-                document.getElementById('googleAccountModal').classList.add('hidden');
-            }
+            // Dengan GIS One Tap, pendaftaran dilakukan otomatis saat kredensial diterima
+            handleGoogleSignIn();
         }
 
         function handleLogout() {
@@ -824,8 +767,9 @@
         // Initialize
         window.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
+            // Coba inisialisasi Google jika script sudah siap dan Client ID sudah diisi
+            initGoogleIfNeeded();
         });
     </script>
 </body>
 </html>
-
