@@ -699,6 +699,156 @@
             color: #94a3b8;
         }
 
+        /* Google Account Selection Modal */
+        .google-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .google-modal-content {
+            background: #1a1a1a;
+            border-radius: 1rem;
+            max-width: 28rem;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid #333;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .google-modal-header {
+            padding: 1.5rem 1.5rem 0 1.5rem;
+        }
+
+        .google-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .google-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .google-modal-body {
+            padding: 0 1.5rem;
+        }
+
+        .google-context {
+            margin-bottom: 1.5rem;
+        }
+
+        .google-main-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .google-subtitle {
+            font-size: 0.875rem;
+            color: #9aa0a6;
+        }
+
+        .app-name {
+            color: #4285f4;
+        }
+
+        .google-accounts {
+            margin-bottom: 1.5rem;
+        }
+
+        .google-account-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .google-account-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .account-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .account-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .default-avatar {
+            width: 100%;
+            height: 100%;
+            background: #4285f4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .account-info {
+            flex: 1;
+        }
+
+        .account-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 0.125rem;
+        }
+
+        .account-email {
+            font-size: 0.75rem;
+            color: #9aa0a6;
+        }
+
+        .google-modal-footer {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .google-disclaimer {
+            font-size: 0.75rem;
+            color: #9aa0a6;
+            line-height: 1.4;
+        }
+
+        .privacy-link,
+        .terms-link {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        .privacy-link:hover,
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -720,5 +870,10 @@
             .day-box {
                 width: 1.75rem;
                 height: 1.75rem;
+            }
+
+            .google-modal-content {
+                margin: 1rem;
+                max-width: calc(100vw - 2rem);
             }
         }
