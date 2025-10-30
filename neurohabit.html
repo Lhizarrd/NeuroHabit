@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <link rel="stylesheet" href="neurostyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroHabit - Analitik Kebiasaan Berbasis AI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client?hl=id" async defer></script>
+    <style>
+        /* CSS Anda tetap di sini atau di file eksternal */
+    </style>
+</head>
+<body>
+    <div id="signInScreen" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i data-lucide="brain" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h1 class="auth-title">NeuroHabit</h1>
+                <p class="auth-subtitle">Analitik Kebiasaan Berbasis AI</p>
+            </div>
+
+            <form id="signInForm" onsubmit="return handleSignIn(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="signInEmail" placeholder="nama@email.com" required>
+                    <div class="form-error" id="signInEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signInPassword" placeholder="••••••••" required>
+                    <div class="form-error" id="signInPasswordError"></div>
+                </div>
+                <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-top:-8px;">
+                    <input type="checkbox" id="signInShowPassword">
+                    <label for="signInShowPassword" class="form-label" style="margin:0;">Tampilkan password</label>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i data-lucide="log-in" style="width: 20px; height: 20px;"></i>
+                    Masuk
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>atau</span>
+            </div>
+
+            <button type="button" class="btn btn-google" data-legacy="true" onclick="handleGoogleSignIn()">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Masuk dengan Google
+            </button>
+            <div id="googleSignInContainer" style="margin-top: 8px;"></div>
+
+            <div class="auth-link">
+                Belum punya akun? <a onclick="goToSignUp()">Daftar</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="habitDetailModal" class="modal hidden" onclick="closeHabitDetailOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="habitDetailTitle">
+                    <i data-lucide="calendar" style="width: 28px; height: 28px; color: #c084fc;"></i>
+                    Detail Kebiasaan
+                </h2>
+                <button class="btn-close" onclick="closeHabitDetail()" type="button">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+
+            <div id="habitDetailContent"></div>
+        </div>
+    </div>
+
+    <div id="customHabitModal" class="modal hidden" onclick="closeCustomHabitOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i data-lucide="plus" style="width: 28px; height: 28px; color: #c084fc;"></i>
+                    Kebiasaan Kustom
+                </h2>
+                <button class="btn-close" onclick="closeCustomHabitModal()" type="button">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+
+            <div class="add-habit-form" style="display:block; gap: 12px;">
+                <div class="form-group">
+                    <label class="form-label">Nama Kebiasaan</label>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <input type="text" id="customHabitIcon" class="form-input" style="width:70px; text-align:center;" placeholder="😀">
+                        <input type="text" id="customHabitName" class="form-input" placeholder="Nama kebiasaan" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Hari Tugas</label>
+                    <div id="customHabitDays" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Jam Pengingat</label>
+                    <input type="time" id="customHabitTime" class="form-input" value="08:00">
+                </div>
+
+                <div class="form-group" style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <div>
+                        <label class="form-label">Tanggal Mulai</label>
+                        <input type="date" id="customHabitStart" class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Tanggal Berakhir</label>
+                        <input type="date" id="customHabitEnd" class="form-input">
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:12px;">
+                    <button id="customHabitDeleteBtn" class="btn btn-cancel hidden" onclick="deleteHabit(customHabitState.editingHabitId)" type="button">Hapus</button>
+                    <button class="btn btn-primary" onclick="saveCustomHabit()" type="button">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="signUpScreen" class="auth-container hidden">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i data-lucide="brain" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h1 class="auth-title">Buat Akun</h1>
+                <p class="auth-subtitle">Mulai perjalanan habit tracking Anda</p>
+            </div>
+
+            <form id="signUpForm" onsubmit="return handleSignUp(event)">
+                <div class="form-group">
+                    <label class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-input" id="signUpName" placeholder="John Doe" required>
+                    <div class="form-error" id="signUpNameError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="signUpEmail" placeholder="nama@email.com" required>
+                    <div class="form-error" id="signUpEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signUpPassword" placeholder="••••••••" required>
+                    <div class="form-error" id="signUpPasswordError"></div>
+                </div>
+                <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-top:-8px;">
+                    <input type="checkbox" id="signUpShowPassword">
+                    <label for="signUpShowPassword" class="form-label" style="margin:0;">Tampilkan password</label>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i data-lucide="user-plus" style="width: 20px; height: 20px;"></i>
+                    Buat Akun
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>atau</span>
+            </div>
+
+            <button type="button" class="btn btn-google" data-legacy="true" onclick="handleGoogleSignUp()">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Daftar dengan Google
+            </button>
+            <div id="googleSignUpContainer" style="margin-top: 8px;"></div>
+
+            <div class="auth-link">
+                Sudah punya akun? <a onclick="goToSignIn()">Masuk</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainApp" class="container hidden">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i data-lucide="brain" style="width: 32px; height: 32px;"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>NeuroHabit</h1>
+                    <p>Analitik Kebiasaan Berbasis AI</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-insights" onclick="showNotifications()" aria-label="Notifikasi" title="Notifikasi"
+                    style="padding:8px; min-width:36px; display:inline-flex; align-items:center; justify-content:center;">
+                    🔔
+                </button>
+                <button class="btn-logout" onclick="handleLogout()">Keluar</button>
+            </div>
+        </div>
+
+        <div id="notificationBar" class="hidden" style="background: rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.35); color:#a7f3d0; padding:8px 12px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; gap:8px; margin:12px 0;">
+            <div id="notificationBarText" style="font-weight:600;"></div>
+            <button class="btn-close" onclick="hideNotificationBar()" type="button">
+                <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchView('tracker')">
+                <i data-lucide="target" style="width: 20px; height: 20px;"></i>
+                Pelacak
+            </button>
+            <button class="nav-tab" onclick="switchView('analytics')">
+                <i data-lucide="bar-chart-3" style="width: 20px; height: 20px;"></i>
+                Analitik
+            </button>
+            <button class="nav-tab" onclick="switchView('calendar')">
+                <i data-lucide="calendar" style="width: 20px; height: 20px;"></i>
+                Kalender
+            </button>
+        </div>
+
+        <div id="trackerView" class="view-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalStreaks">0</div>
+                    <div class="stat-label">Total Beruntun</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="activeHabits">0</div>
+                    <div class="stat-label">Kebiasaan Aktif</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="todayProgress">0%</div>
+                    <div class="stat-label">Hari Ini</div>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom: 0.75rem;">
+                <button class="btn-insights" onclick="showInsights()">
+                    <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
+                    OpenAI
+                </button>
+                <button class="btn-insights" onclick="showAddHabitForm()">
+                    <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
+                    Tambah
+                </button>
+            </div>
+
+            <div id="habitsList"></div>
+
+            <div id="addHabitForm" class="add-habit-form hidden">
+                <input type="text" class="add-habit-input" id="newHabitInput" placeholder="Masukkan nama kebiasaan..." onkeypress="if(event.key==='Enter') addNewHabit()">
+                <div class="form-buttons">
+                    <button class="btn-add" onclick="addNewHabit()">Tambah</button>
+                    <button class="btn-cancel" onclick="cancelAddHabit()">Batal</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="analyticsView" class="view-content hidden">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 class="insight-label">Streak Terbaik</h3>
+                    <div class="insight-value" id="bestStreak">0 hari</div>
+                </div>
+                <div class="stat-card">
+                    <h3 class="insight-label">Rata-rata Penyelesaian</h3>
+                    <div class="insight-value" id="avgCompletion">0%</div>
+                </div>
+            </div>
+
+            <div class="analytics-section" style="margin-top:12px;">
+                <h2 class="section-header">
+                    <i data-lucide="trending-up" style="width: 24px; height: 24px; color: #c084fc;"></i>
+                    Ringkasan Performa
+                </h2>
+                <div class="insight-card" style="align-items:center; text-align:center; margin-bottom: 12px;">
+                    <div style="width:120px;height:120px;border-radius:9999px;border:8px solid rgba(203,213,225,0.35); display:flex;align-items:center;justify-content:center; margin:0 auto;">
+                        <span id="overallRateValue" class="insight-value" style="font-size:1.5rem;">0%</span>
+                    </div>
+                </div>
+                <div class="insight-label" style="text-align:center;">Tingkat Keseluruhan</div>
+                <div id="performanceList"></div>
+            </div>
+        </div>
+
+        <div id="calendarView" class="view-content hidden">
+            <div class="analytics-section">
+                <h2 class="section-header">
+                    <i data-lucide="calendar" style="width: 24px; height: 24px; color: #c084fc;"></i>
+                    Kalender Kebiasaan
+                </h2>
+                <div class="nav-tabs" id="calendarModeTabs">
+                    <button class="nav-tab active" id="tabWeekly" onclick="switchCalendarMode('weekly')">Mingguan</button>
+                    <button class="nav-tab" id="tabMonthly" onclick="switchCalendarMode('monthly')">Bulanan</button>
+                </div>
+
+                <div id="calendarWeekly" class="view-content" style="padding-top:8px;"></div>
+                <div id="calendarMonthly" class="view-content hidden" style="padding-top:8px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="insightsModal" class="modal hidden" onclick="closeInsightsOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i data-lucide="brain" style="width: 32px; height: 32px; color: #c084fc;"></i>
+                    Wawasan & Analisis AI
+                </h2>
+                <button class="btn-close" onclick="closeInsights()" type="button">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-value" id="insightCompletionRate">0%</div>
+                    <div class="insight-label">Tingkat Penyelesaian Keseluruhan</div>
+                    <div class="insight-detail" id="insightDetail"></div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-value" id="insightAvgStreak">0</div>
+                    <div class="insight-label">Rata-rata Streak</div>
+                    <div class="insight-detail" id="insightBestHabit"></div>
+                </div>
+            </div>
+
+            <div class="correlation-section">
+                <h3 class="section-title">
+                    <i data-lucide="trending-up" style="width: 20px; height: 20px; color: #c084fc;"></i>
+                    Korelasi Kebiasaan (Terdeteksi AI)
+                </h3>
+                <div id="correlationsList"></div>
+            </div>
+
+            <div class="recommendation-section">
+                <h3 class="section-title">
+                    <i data-lucide="sparkles" style="width: 20px; height: 20px; color: #c084fc;"></i>
+                    Rekomendasi AI
+                </h3>
+                <div id="recommendationsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationsModal" class="modal hidden" onclick="if(event.target.id==='notificationsModal') closeNotifications()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i data-lucide="bell-ring" style="width: 28px; height: 28px; color: #c084fc;"></i>
+                    Notifikasi
+                </h2>
+                <button class="btn-close" onclick="closeNotifications()" type="button">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+            <div id="notificationsList"></div>
+        </div>
+    </div>
+
+    <div id="addHabitModal" class="modal hidden" onclick="closeAddHabitOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i data-lucide="plus" style="width: 28px; height: 28px; color: #c084fc;"></i>
+                    Kebiasaan Baru
+                </h2>
+                <button class="btn-close" onclick="closeAddHabitModal()" type="button">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-cat="popular" onclick="switchAddHabitCategory('popular', event)">
+                    <i data-lucide="flame" style="width: 18px; height: 18px;"></i>
+                    Populer
+                </button>
+                <button class="nav-tab" data-cat="health" onclick="switchAddHabitCategory('health', event)">
+                    <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+                    Kesehatan
+                </button>
+                <button class="nav-tab" data-cat="lifestyle" onclick="switchAddHabitCategory('lifestyle', event)">
+                    <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+                    Gaya Hidup
+                </button>
+                <button class="nav-tab" data-cat="quit" onclick="switchAddHabitCategory('quit', event)">
+                    <i data-lucide="ban" style="width: 18px; height: 18px;"></i>
+                    Berhenti
+                </button>
+            </div>
+
+            <div id="addHabitList" style="margin-top: 8px;"></div>
+
+            <div style="text-align: center; margin-top: 16px;">
+                <button class="btn btn-primary" onclick="openCustomHabit()">Kebiasaan Kustom</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+    <script src="openai-client.js"></script>
+    <script src="Neuro.js"></script>
+</body>
+</html>
