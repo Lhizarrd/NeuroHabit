@@ -26,10 +26,16 @@
                 <div class="form-group">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-input" id="signInEmail" placeholder="nama@email.com" required>
+                    <div class="form-error" id="signInEmailError"></div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-input" id="signInPassword" placeholder="••••••••" required>
+                    <div class="form-error" id="signInPasswordError"></div>
+                </div>
+                <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-top:-8px;">
+                    <input type="checkbox" id="signInShowPassword">
+                    <label for="signInShowPassword" class="form-label" style="margin:0;">Tampilkan password</label>
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i data-lucide="log-in" style="width: 20px; height: 20px;"></i>
@@ -96,73 +102,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Deskripsi (opsional)</label>
-                    <input type="text" id="customHabitDesc" class="form-input" placeholder="Deskripsi singkat">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Grup (opsional)</label>
-                    <input type="text" id="customHabitGroup" class="form-input" placeholder="Misal: Kesehatan">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Warna</label>
-                    <div id="customHabitColors" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Tipe Kebiasaan</label>
-                    <div style="display:flex; gap:8px;">
-                        <button class="nav-tab active" id="typeBuildBtn" onclick="setCustomHabitType('build')">Bangun</button>
-                        <button class="nav-tab" id="typeQuitBtn" onclick="setCustomHabitType('quit')">Berhenti</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Periode Tujuan</label>
-                    <select id="customHabitPeriod" class="form-input">
-                        <option value="day">Sepanjang Hari</option>
-                        <option value="session">Hitung Jumlah</option>
-                    </select>
-                </div>
-
-                <div class="form-group" style="display:flex; gap:12px; align-items:center;">
-                    <label class="form-label" style="min-width: 120px;">Nilai Target</label>
-                    <input type="number" id="customHabitGoal" class="form-input" value="1" min="1" style="max-width:120px;">
-                    <span>/ Hari</span>
-                </div>
-
-                <div class="form-group">
                     <label class="form-label">Hari Tugas</label>
                     <div id="customHabitDays" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Rentang Waktu</label>
-                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                        <button class="nav-tab active" data-range="any" onclick="setCustomHabitTimeRange('any', event)">Kapan saja</button>
-                        <button class="nav-tab" data-range="morning" onclick="setCustomHabitTimeRange('morning', event)">Pagi</button>
-                        <button class="nav-tab" data-range="afternoon" onclick="setCustomHabitTimeRange('afternoon', event)">Siang</button>
-                        <button class="nav-tab" data-range="evening" onclick="setCustomHabitTimeRange('evening', event)">Malam</button>
-                    </div>
-                </div>
-
-                <div class="form-group" style="display:flex; justify-content:space-between; align-items:center;">
-                    <label class="form-label">Pengingat</label>
-                    <input type="checkbox" id="customHabitReminder">
-                </div>
-
-                <div class="form-group" style="display:flex; justify-content:space-between; align-items:center;">
-                    <label class="form-label">Tampilkan catatan setelah selesai</label>
-                    <input type="checkbox" id="customHabitMemo" checked>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Jenis Grafik</label>
-                    <select id="customHabitChart" class="form-input">
-                        <option value="bar">Batang</option>
-                        <option value="line">Garis</option>
-                    </select>
+                    <label class="form-label">Jam Pengingat</label>
+                    <input type="time" id="customHabitTime" class="form-input" value="08:00">
                 </div>
 
                 <div class="form-group" style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -176,8 +122,9 @@
                     </div>
                 </div>
 
-                <div style="text-align:center; margin-top:12px;">
-                    <button class="btn btn-primary" onclick="saveCustomHabit()">Simpan</button>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:12px;">
+                    <button id="customHabitDeleteBtn" class="btn btn-cancel hidden" onclick="deleteHabit(customHabitState.editingHabitId)" type="button">Hapus</button>
+                    <button class="btn btn-primary" onclick="saveCustomHabit()" type="button">Simpan</button>
                 </div>
             </div>
         </div>
@@ -197,14 +144,21 @@
                 <div class="form-group">
                     <label class="form-label">Nama Lengkap</label>
                     <input type="text" class="form-input" id="signUpName" placeholder="John Doe" required>
+                    <div class="form-error" id="signUpNameError"></div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-input" id="signUpEmail" placeholder="nama@email.com" required>
+                    <div class="form-error" id="signUpEmailError"></div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-input" id="signUpPassword" placeholder="••••••••" required>
+                    <div class="form-error" id="signUpPasswordError"></div>
+                </div>
+                <div class="form-group" style="display:flex;align-items:center;gap:8px;margin-top:-8px;">
+                    <input type="checkbox" id="signUpShowPassword">
+                    <label for="signUpShowPassword" class="form-label" style="margin:0;">Tampilkan password</label>
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i data-lucide="user-plus" style="width: 20px; height: 20px;"></i>
@@ -245,12 +199,19 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button class="btn-insights" onclick="showInsights()">
-                    <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
-                    Wawasan AI
+                <button class="btn-insights" onclick="showNotifications()" aria-label="Notifikasi" title="Notifikasi"
+                    style="padding:8px; min-width:36px; display:inline-flex; align-items:center; justify-content:center;">
+                    🔔
                 </button>
                 <button class="btn-logout" onclick="handleLogout()">Keluar</button>
             </div>
+        </div>
+
+        <div id="notificationBar" class="hidden" style="background: rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.35); color:#a7f3d0; padding:8px 12px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; gap:8px; margin:12px 0;">
+            <div id="notificationBarText" style="font-weight:600;"></div>
+            <button class="btn-close" onclick="hideNotificationBar()" type="button">
+                <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+            </button>
         </div>
 
         <div class="nav-tabs">
@@ -284,12 +245,18 @@
                 </div>
             </div>
 
-            <div id="habitsList"></div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom: 0.75rem;">
+                <button class="btn-insights" onclick="showInsights()">
+                    <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
+                    OpenAI
+                </button>
+                <button class="btn-insights" onclick="showAddHabitForm()">
+                    <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
+                    Tambah
+                </button>
+            </div>
 
-            <button class="add-habit-btn" onclick="showAddHabitForm()">
-                <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
-                Tambah Kebiasaan Baru
-            </button>
+            <div id="habitsList"></div>
 
             <div id="addHabitForm" class="add-habit-form hidden">
                 <input type="text" class="add-habit-input" id="newHabitInput" placeholder="Masukkan nama kebiasaan..." onkeypress="if(event.key==='Enter') addNewHabit()">
@@ -301,20 +268,6 @@
         </div>
 
         <div id="analyticsView" class="view-content hidden">
-            <div class="analytics-section">
-                <h2 class="section-header">
-                    <i data-lucide="trending-up" style="width: 24px; height: 24px; color: #c084fc;"></i>
-                    Ringkasan Performa
-                </h2>
-                <div class="insight-card" style="align-items:center; text-align:center; margin-bottom: 12px;">
-                    <div style="width:120px;height:120px;border-radius:9999px;border:8px solid rgba(203,213,225,0.35); display:flex;align-items:center;justify-content:center; margin:0 auto 8px;">
-                        <span id="overallRateValue" class="insight-value" style="font-size:1.5rem;">0%</span>
-                    </div>
-                    <div class="insight-label">Tingkat Keseluruhan</div>
-                </div>
-                <div id="performanceList"></div>
-            </div>
-
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3 class="insight-label">Streak Terbaik</h3>
@@ -324,6 +277,20 @@
                     <h3 class="insight-label">Rata-rata Penyelesaian</h3>
                     <div class="insight-value" id="avgCompletion">0%</div>
                 </div>
+            </div>
+
+            <div class="analytics-section" style="margin-top:12px;">
+                <h2 class="section-header">
+                    <i data-lucide="trending-up" style="width: 24px; height: 24px; color: #c084fc;"></i>
+                    Ringkasan Performa
+                </h2>
+                <div class="insight-card" style="align-items:center; text-align:center; margin-bottom: 12px;">
+                    <div style="width:120px;height:120px;border-radius:9999px;border:8px solid rgba(203,213,225,0.35); display:flex;align-items:center;justify-content:center; margin:0 auto;">
+                        <span id="overallRateValue" class="insight-value" style="font-size:1.5rem;">0%</span>
+                    </div>
+                </div>
+                <div class="insight-label" style="text-align:center;">Tingkat Keseluruhan</div>
+                <div id="performanceList"></div>
             </div>
         </div>
 
@@ -387,6 +354,21 @@
         </div>
     </div>
 
+    <div id="notificationsModal" class="modal hidden" onclick="if(event.target.id==='notificationsModal') closeNotifications()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i data-lucide="bell-ring" style="width: 28px; height: 28px; color: #c084fc;"></i>
+                    Notifikasi
+                </h2>
+                <button class="btn-close" onclick="closeNotifications()" type="button">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+            <div id="notificationsList"></div>
+        </div>
+    </div>
+
     <div id="addHabitModal" class="modal hidden" onclick="closeAddHabitOnBackdrop(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -426,1023 +408,8 @@
         </div>
     </div>
 
-    <script>
-        // === BAGIAN YANG DIPERBAIKI ===
-
-        // App State
-        let currentUser = null;
-        let currentView = 'tracker';
-        let calendarMode = 'weekly';
-        let calendarMonth = new Date(); // digunakan untuk tampilan bulanan
-        // Mengambil data pengguna dari localStorage atau membuat array kosong jika belum ada
-        let users = JSON.parse(localStorage.getItem('neuroHabitUsers')) || [];
-
-        // Data habits sekarang akan menjadi properti dari setiap pengguna
-        let habits = [];
-
-        // KONFIGURASI GOOGLE - Ganti nilai di bawah dengan Client ID Anda dari Google Cloud Console
-        const GOOGLE_CLIENT_ID = '113527070387-jogik1kbo9ri7ncop1jv9pekso5ui6qn.apps.googleusercontent.com';
-        let googleInitialized = false;
-
-        function initGoogleIfNeeded() {
-            if (googleInitialized) return;
-            if (typeof google === 'undefined') return; // script belum siap
-            if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.startsWith('REPLACE_')) return; // belum dikonfigurasi
-
-            google.accounts.id.initialize({
-                client_id: GOOGLE_CLIENT_ID,
-                callback: handleGoogleCredentialResponse,
-                auto_select: false,
-                cancel_on_tap_outside: true
-            });
-            googleInitialized = true;
-
-            // Render tombol GIS di dua tempat (Sign In dan Sign Up)
-            const signInContainer = document.getElementById('googleSignInContainer');
-            const signUpContainer = document.getElementById('googleSignUpContainer');
-            if (signInContainer) {
-                google.accounts.id.renderButton(signInContainer, {
-                    type: 'standard',
-                    theme: 'outline',
-                    size: 'large',
-                    text: 'continue_with', // akan tampil sebagai "Lanjutkan dengan Google" karena hl=id
-                    shape: 'pill',
-                    logo_alignment: 'left'
-                });
-            }
-            if (signUpContainer) {
-                google.accounts.id.renderButton(signUpContainer, {
-                    type: 'standard',
-                    theme: 'outline',
-                    size: 'large',
-                    text: 'continue_with',
-                    shape: 'pill',
-                    logo_alignment: 'left'
-                });
-            }
-
-            // Sembunyikan tombol kustom jika GIS tersedia
-            document.querySelectorAll('.btn.btn-google[data-legacy="true"]').forEach(btn => btn.classList.add('hidden'));
-        }
-
-        function handleGoogleCredentialResponse(response) {
-            try {
-                const idToken = response && response.credential;
-                if (!idToken) return;
-                const payload = JSON.parse(atob(idToken.split('.')[1]));
-                const email = payload.email;
-                const name = payload.name || payload.given_name || `Google User`;
-
-                // Cari user; jika belum ada, buat akun dengan authMethod 'google'
-                let user = users.find(u => u.email === email && u.authMethod === 'google');
-                if (!user) {
-                    user = { name, email, authMethod: 'google', password: null, habits: [] };
-                    users.push(user);
-                    localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
-                }
-
-                currentUser = user;
-                habits = currentUser.habits || [];
-                showMainApp();
-            } catch (e) {
-                alert('Gagal memproses kredensial Google.');
-                // Optional: console.error(e);
-            }
-        }
-
-        // Auth Functions (Logika Baru)
-        function handleSignIn(event) {
-            event.preventDefault();
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-
-            // Cari pengguna berdasarkan email
-            const user = users.find(u => u.email === email);
-
-            // Validasi: Cek apakah pengguna ada dan password cocok
-            if (user && user.password === password) {
-                currentUser = user;
-                // Muat data habits milik pengguna yang login
-                habits = currentUser.habits || [
-                    // Data default jika pengguna baru
-                    { id: 1, name: 'Olahraga Pagi', icon: '🏃', color: 'bg-blue-500', colorHex: '#3b82f6', streak: 5, completions: {} },
-                    { id: 2, name: 'Membaca 30 menit', icon: '📚', color: 'bg-purple-500', colorHex: '#a855f7', streak: 3, completions: {} }
-                ];
-                showMainApp();
-            } else {
-                alert('Email atau password salah. Silakan coba lagi.');
-            }
-            return false;
-        }
-
-        function handleSignUp(event) {
-            event.preventDefault();
-            const name = document.getElementById('signUpName').value;
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-
-            // Validasi: Cek apakah email sudah terdaftar
-            if (users.find(u => u.email === email)) {
-                alert('Email ini sudah terdaftar. Silakan gunakan email lain atau sign in.');
-                return false;
-            }
-            
-            // Tambahkan pengguna baru ke array
-            const newUser = { name, email, password, habits: [] }; // Setiap user punya data habits sendiri
-            users.push(newUser);
-
-            // Simpan array pengguna yang sudah diperbarui ke localStorage
-            localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
-
-            alert('Akun berhasil dibuat! Silakan Sign In untuk melanjutkan.');
-            goToSignIn(); // Arahkan kembali ke halaman sign in
-            return false;
-        }
-
-        function handleGoogleSignIn() {
-            initGoogleIfNeeded();
-            if (!googleInitialized) {
-                alert('Google Client ID belum dikonfigurasi.');
-                return;
-            }
-            // Tampilkan prompt One Tap; klik tombol ini akan memicu pemilihan akun
-            google.accounts.id.prompt();
-        }
-
-        function handleGoogleSignUp() {
-            // Dengan GIS One Tap, pendaftaran dilakukan otomatis saat kredensial diterima
-            handleGoogleSignIn();
-        }
-
-        function handleLogout() {
-            // Simpan data habits terakhir pengguna sebelum logout
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            if (userIndex !== -1) {
-                users[userIndex].habits = habits;
-                localStorage.setItem('neuroHabitUsers', JSON.stringify(users));
-            }
-
-            currentUser = null;
-            habits = [];
-            document.getElementById('mainApp').classList.add('hidden');
-            document.getElementById('signInScreen').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        // === AKHIR BAGIAN YANG DIPERBAIKI ===
-
-
-        // Fungsi lainnya tetap sama
-        function goToSignUp() {
-            document.getElementById('signInScreen').classList.add('hidden');
-            document.getElementById('signUpScreen').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function goToSignIn() {
-            document.getElementById('signUpScreen').classList.add('hidden');
-            document.getElementById('signInScreen').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function showMainApp() {
-            document.getElementById('signInScreen').classList.add('hidden');
-            document.getElementById('signUpScreen').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
-            renderHabits();
-            updateStats();
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        // Utility Functions
-        function getCurrentDate() {
-            return new Date().toISOString().split('T')[0];
-        }
-
-        function getLast7Days() {
-            // Minggu -> Sabtu untuk minggu berjalan (real-time)
-            const today = new Date();
-            const dayIdx = today.getDay(); // 0=Min .. 6=Sab
-            const sunday = new Date(today);
-            sunday.setHours(0,0,0,0);
-            sunday.setDate(today.getDate() - dayIdx);
-            const days = [];
-            for (let i = 0; i < 7; i++) {
-                const date = new Date(sunday);
-                date.setDate(sunday.getDate() + i);
-                days.push({
-                    date: date.toISOString().split('T')[0],
-                    day: date.toLocaleDateString('id-ID', { weekday: 'short' }),
-                    dayNum: date.getDate()
-                });
-            }
-            return days;
-        }
-
-        function calculateStreak(completions) {
-            let streak = 0;
-            const today = new Date();
-            
-            for (let i = 0; i < 365; i++) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-                const dateStr = date.toISOString().split('T')[0];
-                
-                if (completions[dateStr]) {
-                    streak++;
-                } else {
-                    // Cek hari kemarin, jika kosong maka streak berakhir
-                    const yesterday = new Date(today);
-                    yesterday.setDate(yesterday.getDate() - 1);
-                    if (i === 0 && !completions[yesterday.toISOString().split('T')[0]]) {
-                        break;
-                    }
-                    if (i > 0) break;
-                }
-            }
-            return streak;
-        }
-
-
-        // Navigation
-        function switchView(view) {
-            currentView = view;
-            
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.closest('.nav-tab').classList.add('active');
-            
-            document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-            document.getElementById(view + 'View').classList.remove('hidden');
-            
-            if (view === 'analytics') renderAnalytics();
-            if (view === 'calendar') renderCalendar();
-            
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        // Render Functions
-        function renderHabits() {
-            const habitsList = document.getElementById('habitsList');
-            const last7Days = getLast7Days();
-            
-            if (habits.length === 0) {
-                habitsList.innerHTML = `<p style="text-align:center; color: #9ca3af; padding: 2rem 0;">Anda belum memiliki habit. Tambahkan satu untuk memulai!</p>`;
-                return;
-            }
-
-            habitsList.innerHTML = habits.map(habit => `
-                <div class="habit-card">
-                    <div class="habit-header">
-                        <div class="habit-info">
-                            <div class="habit-icon" style="background-color: ${habit.colorHex}">
-                                ${habit.icon}
-                            </div>
-                            <div>
-                                <div class="habit-name" style="cursor:pointer;" onclick="openHabitDetail(${habit.id})">${habit.name}</div>
-                                <div class="habit-streak">
-                                    <i data-lucide="award" style="width: 16px; height: 16px;"></i>
-                                    <span>${habit.streak} hari beruntun</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="days-tracker">
-                        ${last7Days.map(day => `
-                            <div class="day-item" onclick="toggleHabit(${habit.id}, '${day.date}')">
-                                <span class="day-label">${day.day}</span>
-                                <div class="day-box ${habit.completions[day.date] ? 'completed' : 'empty'}" 
-                                     style="${habit.completions[day.date] ? `background-color: ${habit.colorHex}` : ''}">
-                                    ${habit.completions[day.date] ? '<i data-lucide="check" style="width: 20px; height: 20px;"></i>' : ''}
-                                </div>
-                                <span class="day-num">${day.dayNum}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-            
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function toggleHabit(habitId, date) {
-            const habit = habits.find(h => h.id === habitId);
-            if (habit) {
-                // Inisialisasi completions jika belum ada
-                if (!habit.completions) {
-                    habit.completions = {};
-                }
-                habit.completions[date] = !habit.completions[date];
-                habit.streak = calculateStreak(habit.completions);
-                renderHabits();
-                updateStats();
-            }
-        }
-
-        function updateStats() {
-            if (!habits) return;
-            const totalStreaks = habits.reduce((sum, h) => sum + h.streak, 0);
-            const activeHabits = habits.length;
-            const todayCompletions = habits.filter(h => h.completions && h.completions[getCurrentDate()]).length;
-            const todayProgress = activeHabits > 0 ? Math.round((todayCompletions / activeHabits) * 100) : 0;
-            
-            document.getElementById('totalStreaks').textContent = totalStreaks;
-            document.getElementById('activeHabits').textContent = activeHabits;
-            document.getElementById('todayProgress').textContent = todayProgress + '%';
-        }
-
-        function renderAnalytics() {
-            const performanceList = document.getElementById('performanceList');
-            const last7Days = getLast7Days();
-
-            if (habits.length === 0) {
-                 performanceList.innerHTML = `<p style="text-align:center; color: #9ca3af;">Tidak ada data untuk dianalisis.</p>`;
-                 document.getElementById('bestStreak').textContent = '0 hari';
-                 document.getElementById('avgCompletion').textContent = '0%';
-                 const overallEl = document.getElementById('overallRateValue');
-                 if (overallEl) overallEl.textContent = '0%';
-                 return;
-            }
-            
-            performanceList.innerHTML = habits.map(habit => {
-                const completionRate = (last7Days.filter(day => habit.completions && habit.completions[day.date]).length / 7) * 100;
-                return `
-                    <div class="habit-performance">
-                        <div class="performance-header">
-                            <div class="performance-info">
-                                <span style="font-size: 1.25rem;">${habit.icon}</span>
-                                <span style="font-weight: 600;">${habit.name}</span>
-                            </div>
-                            <span class="performance-rate">${completionRate.toFixed(0)}%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${completionRate}%; background-color: ${habit.colorHex}"></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            const bestStreak = Math.max(0, ...habits.map(h => h.streak));
-            const avgCompletion = habits.length > 0 ? Math.round(habits.reduce((sum, h) => {
-                const rate = last7Days.filter(day => h.completions && h.completions[day.date]).length / 7;
-                return sum + rate;
-            }, 0) / habits.length * 100) : 0;
-            
-            document.getElementById('bestStreak').textContent = bestStreak + ' hari';
-            document.getElementById('avgCompletion').textContent = avgCompletion + '%';
-
-            // Overall rate: total checks over habits*7 (minggu berjalan)
-            const totalCompletions = habits.reduce((sum, h) => {
-                return sum + last7Days.filter(d => h.completions && h.completions[d.date]).length;
-            }, 0);
-            const denominator = habits.length * 7;
-            const overallRate = denominator > 0 ? Math.round((totalCompletions / denominator) * 100) : 0;
-            const overallEl = document.getElementById('overallRateValue');
-            if (overallEl) overallEl.textContent = overallRate + '%';
-        }
-
-        function switchCalendarMode(mode) {
-            calendarMode = mode;
-            // toggle active tab
-            document.querySelectorAll('#calendarModeTabs .nav-tab').forEach(t => t.classList.remove('active'));
-            const btn = mode === 'weekly' ? document.getElementById('tabWeekly') : document.getElementById('tabMonthly');
-            if (btn) btn.classList.add('active');
-            // toggle views
-            document.getElementById('calendarWeekly').classList.toggle('hidden', mode !== 'weekly');
-            document.getElementById('calendarMonthly').classList.toggle('hidden', mode !== 'monthly');
-            renderCalendar();
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function renderCalendar() {
-            if (calendarMode === 'weekly') renderCalendarWeekly();
-            else renderCalendarMonthly();
-        }
-
-        function renderCalendarWeekly() {
-            const container = document.getElementById('calendarWeekly');
-            if (!container) return;
-            const days = getLast7Days(); // Min..Sab minggu ini
-            let html = '';
-            // Header
-            html += `<div class="habit-performance">
-                <div class="performance-header" style="justify-content:space-between;">
-                    <div style="font-weight:600">Mingguan (${days[0].dayNum}/${new Date(days[0].date).toLocaleDateString('id-ID',{month:'2-digit'})} - ${days[6].dayNum}/${new Date(days[6].date).toLocaleDateString('id-ID',{month:'2-digit'})})</div>
-                    <div style="display:flex; gap:12px;">${days.map(d=>`<div style='width:32px;text-align:center;color:#94a3b8;'>${d.day}<br><span style='font-weight:600;color:#e2e8f0;'>${d.dayNum}</span></div>`).join('')}</div>
-                </div>
-            </div>`;
-            // Rows per habit
-            html += habits.map(h => {
-                const row = days.map(d => {
-                    const done = h.completions && h.completions[d.date];
-                    const fill = done ? `background:${h.colorHex}` : 'background:transparent;border:2px solid rgba(148,163,184,0.3)';
-                    return `<div style='width:32px;height:32px;border-radius:8px;${fill};cursor:pointer' onclick="toggleHabit(${h.id}, '${d.date}'); renderCalendarWeekly();"></div>`;
-                }).join('');
-                return `<div class='habit-performance'>
-                    <div class='performance-header' style='justify-content:space-between;'>
-                        <div class='performance-info'>
-                            <span style='font-size:1.1rem;'>${h.icon}</span>
-                            <span style='font-weight:600;'>${h.name}</span>
-                        </div>
-                        <div style='display:flex; gap:12px;'>${row}</div>
-                    </div>
-                </div>`;
-            }).join('');
-            container.innerHTML = html;
-        }
-
-        function changeCalendarMonth(delta) {
-            calendarMonth.setMonth(calendarMonth.getMonth() + delta);
-            renderCalendarMonthly();
-        }
-
-        function renderCalendarMonthly() {
-            const container = document.getElementById('calendarMonthly');
-            if (!container) return;
-            const now = new Date();
-            // Normalisasi ke awal bulan untuk state
-            calendarMonth.setDate(1);
-            const title = calendarMonth.toLocaleDateString('id-ID', { year: 'numeric', month: 'long' });
-            let html = `<div style='display:flex;align-items:center;justify-content:center;gap:12px;color:#94a3b8;margin-bottom:8px;'>
-                <button class="nav-tab" style="padding:4px 8px;" onclick="changeCalendarMonth(-1)">◀</button>
-                <div style='min-width:160px;text-align:center;'>${title}</div>
-                <button class="nav-tab" style="padding:4px 8px;" onclick="changeCalendarMonth(1)">▶</button>
-            </div>`;
-
-            const daysInMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth()+1, 0).getDate();
-            const firstDay = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1).getDay(); // 0=Sun
-            // Header row
-            html += '<div class="calendar-grid">' + ['Min','Sen','Sel','Rab','Kam','Jum','Sab'].map(d=>`<div class="calendar-header">${d}</div>`).join('') + '</div>';
-            // Days grid
-            html += '<div class="calendar-grid">';
-            for (let i=0;i<firstDay;i++) html += '<div class="calendar-day"></div>';
-            for (let day=1; day<=daysInMonth; day++) {
-                const date = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), day);
-                const dateStr = date.toISOString().split('T')[0];
-                // collect icons for habits completed on this date
-                const icons = habits.filter(h => h.completions && h.completions[dateStr]).map(h => ({ icon: h.icon, color: h.colorHex })).slice(0,4);
-                const iconsHtml = icons.map(i => `<span title="${i.icon}" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:6px;background:${i.color};margin:1px;font-size:0.8rem;">${i.icon}</span>`).join('');
-                html += `<div class="calendar-day" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-                    <div>${day}</div>
-                    <div style="display:flex;flex-wrap:wrap;justify-content:center;row-gap:2px;column-gap:2px;">${iconsHtml}</div>
-                </div>`;
-            }
-            html += '</div>';
-
-            // Legend
-            if (habits.length) {
-                html += `<div style='display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;'>` +
-                    habits.map(h => `<div style='display:flex;align-items:center;gap:6px;color:#94a3b8;'>
-                        <span style='display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:6px;background:${h.colorHex};font-size:0.8rem;'>${h.icon}</span>
-                        <span>${h.name}</span>
-                    </div>`).join('') + `</div>`;
-            }
-
-            container.innerHTML = html;
-        }
-
-        // Add Habit Functions
-        function showAddHabitForm() {
-            // Buka modal kategori kebiasaan
-            document.getElementById('addHabitModal').classList.remove('hidden');
-            renderAddHabitModal('popular');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function cancelAddHabit() {
-            document.getElementById('addHabitForm').classList.add('hidden');
-            document.getElementById('newHabitInput').value = '';
-        }
-
-        function addNewHabit() {
-            const input = document.getElementById('newHabitInput');
-            const name = input.value.trim();
-            
-            if (name) {
-                const icons = ['🎯', '✨', '🚀', '💪', '🌟', '🔥', '⚡', '🎨', '🎵', '📝'];
-                const colors = [
-                    { class: 'bg-red-500', hex: '#ef4444' },
-                    { class: 'bg-orange-500', hex: '#f97316' },
-                    { class: 'bg-yellow-500', hex: '#eab308' },
-                    { class: 'bg-green-500', hex: '#22c55e' },
-                    { class: 'bg-teal-500', hex: '#14b8a6' },
-                    { class: 'bg-blue-500', hex: '#3b82f6' },
-                    { class: 'bg-indigo-500', hex: '#6366f1' },
-                    { class: 'bg-purple-500', hex: '#a855f7' },
-                    { class: 'bg-pink-500', hex: '#ec4899' }
-                ];
-                
-                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                habits.push({
-                    id: Date.now(),
-                    name,
-                    icon: randomIcon,
-                    color: randomColor.class,
-                    colorHex: randomColor.hex,
-                    streak: 0,
-                    completions: {}
-                });
-                
-                input.value = '';
-                document.getElementById('addHabitForm').classList.add('hidden');
-                renderHabits();
-                updateStats();
-            }
-        }
-
-        // ====== Add Habit Modal Logic ======
-        const predefinedHabits = {
-            popular: [
-                { name: 'Jalan', icon: '🚶' },
-                { name: 'Tidur', icon: '🛏️' },
-                { name: 'Minum air', icon: '💧' },
-                { name: 'Meditasi', icon: '🧘' },
-                { name: 'Lari', icon: '🏃' },
-                { name: 'Berdiri', icon: '🧍' },
-                { name: 'Bersepeda', icon: '🚴' },
-                { name: 'Workout', icon: '💪' }
-            ],
-            health: [
-                { name: 'Jalan', icon: '🚶' },
-                { name: 'Tidur', icon: '🛏️' },
-                { name: 'Berdiri', icon: '🧍' },
-                { name: 'Bersepeda', icon: '🚴' },
-                { name: 'Bakar Kalori', icon: '🔥' },
-                { name: 'Olahraga', icon: '🏃' },
-                { name: 'Meditasi', icon: '🧘' },
-                { name: 'Minum air', icon: '💧' }
-            ],
-            lifestyle: [
-                { name: 'Catat pengeluaran', icon: '🧾' },
-                { name: 'Menabung', icon: '💰' },
-                { name: 'Kurangi gula', icon: '🍭' },
-                { name: 'Bernapas', icon: '😮‍💨' },
-                { name: 'Meditasi', icon: '🧘' },
-                { name: 'Baca buku', icon: '📚' },
-                { name: 'Belajar', icon: '🎓' },
-                { name: 'Review hari ini', icon: '🗒️' }
-            ],
-            quit: [
-                { name: 'Kurangi karbohidrat', icon: '🍞' },
-                { name: 'Kurangi gula', icon: '🍭' },
-                { name: 'Kurangi kafein', icon: '☕' },
-                { name: 'Kurangi minuman manis', icon: '🥤' },
-                { name: 'Kurangi alkohol', icon: '🍺' },
-                { name: 'Kurangi merokok', icon: '🚭' },
-                { name: 'Kurangi main game', icon: '🎮' },
-                { name: 'Kurangi mengeluh', icon: '😤' }
-            ]
-        };
-
-        let currentAddCategory = 'popular';
-
-        function renderAddHabitModal(category = 'popular') {
-            currentAddCategory = category;
-            const list = document.getElementById('addHabitList');
-            if (!list) return;
-            const items = predefinedHabits[category] || [];
-            list.innerHTML = items.map(h => `
-                <div class="habit-performance">
-                    <div class="performance-header">
-                        <div class="performance-info">
-                            <span style="font-size: 1.25rem;">${h.icon}</span>
-                            <span style="font-weight: 600;">${h.name}</span>
-                        </div>
-                        <button class="btn-add" onclick="addPredefinedHabit('${h.name.replace(/'/g, "\'")}', '${h.icon}', '${category}')">+</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function switchAddHabitCategory(category, event) {
-            document.querySelectorAll('#addHabitModal .nav-tab').forEach(tab => tab.classList.remove('active'));
-            if (event && event.target) event.target.closest('.nav-tab').classList.add('active');
-            renderAddHabitModal(category);
-        }
-
-        function addPredefinedHabit(name, icon, category) {
-            // Open custom modal with preset values
-            closeAddHabitModal();
-            document.getElementById('customHabitModal').classList.remove('hidden');
-            initCustomHabitForm();
-            // Prefill
-            document.getElementById('customHabitName').value = name;
-            document.getElementById('customHabitIcon').value = icon;
-            // Group mapping based on category
-            const groupMap = { popular: 'Populer', health: 'Kesehatan', lifestyle: 'Gaya Hidup', quit: 'Berhenti' };
-            document.getElementById('customHabitGroup').value = groupMap[category] || '';
-            // Default type based on category (quit -> quit)
-            setCustomHabitType(category === 'quit' ? 'quit' : 'build');
-            // Reasonable defaults
-            document.getElementById('customHabitPeriod').value = 'day';
-            document.getElementById('customHabitGoal').value = 1;
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        // Optional helper if we want to call with an object later
-        function openCustomHabitWithPreset(preset) {
-            closeAddHabitModal();
-            document.getElementById('customHabitModal').classList.remove('hidden');
-            initCustomHabitForm();
-            if (preset) {
-                if (preset.name) document.getElementById('customHabitName').value = preset.name;
-                if (preset.icon) document.getElementById('customHabitIcon').value = preset.icon;
-                if (preset.group) document.getElementById('customHabitGroup').value = preset.group;
-                if (preset.type) setCustomHabitType(preset.type);
-            }
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function openCustomHabit() {
-            closeAddHabitModal();
-            document.getElementById('customHabitModal').classList.remove('hidden');
-            initCustomHabitForm();
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function closeAddHabitModal() {
-            const modal = document.getElementById('addHabitModal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function closeAddHabitOnBackdrop(event) {
-            if (event.target.id === 'addHabitModal') {
-                closeAddHabitModal();
-            }
-        }
-
-        // ====== Custom Habit Modal Logic ======
-        let customHabitState = {
-            color: { class: 'bg-purple-500', hex: '#a855f7' },
-            type: 'build',
-            days: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-            timeRange: 'any',
-            editingHabitId: null
-        };
-
-        function initCustomHabitForm() {
-            // Colors
-            const colors = [
-                { class: 'bg-red-500', hex: '#ef4444' },
-                { class: 'bg-orange-500', hex: '#f97316' },
-                { class: 'bg-yellow-500', hex: '#eab308' },
-                { class: 'bg-green-500', hex: '#22c55e' },
-                { class: 'bg-teal-500', hex: '#14b8a6' },
-                { class: 'bg-blue-500', hex: '#3b82f6' },
-                { class: 'bg-indigo-500', hex: '#6366f1' },
-                { class: 'bg-purple-500', hex: '#a855f7' },
-                { class: 'bg-pink-500', hex: '#ec4899' }
-            ];
-            const colorWrap = document.getElementById('customHabitColors');
-            colorWrap.innerHTML = colors.map((c, idx) => `
-                <button class="day-item" style="width:28px;height:28px;border-radius:9999px;border:2px solid #334155;background:${c.hex};" onclick="selectCustomHabitColor(${idx})"></button>
-            `).join('');
-            customHabitState.availableColors = colors;
-
-            // Days
-            const days = [
-                { id: 'Mon', label: 'Sen' },
-                { id: 'Tue', label: 'Sel' },
-                { id: 'Wed', label: 'Rab' },
-                { id: 'Thu', label: 'Kam' },
-                { id: 'Fri', label: 'Jum' },
-                { id: 'Sat', label: 'Sab' },
-                { id: 'Sun', label: 'Min' }
-            ];
-            const daysWrap = document.getElementById('customHabitDays');
-            daysWrap.innerHTML = days.map(d => `
-                <label style="display:flex;align-items:center;gap:6px;">
-                    <input type="checkbox" checked value="${d.id}" onchange="toggleCustomHabitDay(this)">
-                    ${d.label}
-                </label>
-            `).join('');
-
-            // Defaults
-            document.getElementById('customHabitIcon').value = '🎯';
-            document.getElementById('customHabitName').value = '';
-            document.getElementById('customHabitDesc').value = '';
-            document.getElementById('customHabitGroup').value = '';
-            document.getElementById('customHabitPeriod').value = 'day';
-            document.getElementById('customHabitGoal').value = 1;
-            document.getElementById('customHabitReminder').checked = false;
-            document.getElementById('customHabitMemo').checked = true;
-            document.getElementById('customHabitChart').value = 'bar';
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('customHabitStart').value = today;
-            document.getElementById('customHabitEnd').value = '';
-
-            setCustomHabitType('build');
-            setCustomHabitTimeRange('any');
-        }
-
-        function selectCustomHabitColor(idx) {
-            customHabitState.color = customHabitState.availableColors[idx];
-        }
-
-        function setCustomHabitType(type) {
-            customHabitState.type = type;
-            document.getElementById('typeBuildBtn').classList.toggle('active', type === 'build');
-            document.getElementById('typeQuitBtn').classList.toggle('active', type === 'quit');
-        }
-
-        function toggleCustomHabitDay(el) {
-            const id = el.value;
-            if (el.checked) {
-                if (!customHabitState.days.includes(id)) customHabitState.days.push(id);
-            } else {
-                customHabitState.days = customHabitState.days.filter(d => d !== id);
-            }
-        }
-
-        function setCustomHabitTimeRange(range, event) {
-            customHabitState.timeRange = range;
-            document.querySelectorAll('#customHabitModal [data-range]').forEach(b => b.classList.remove('active'));
-            if (event && event.target) event.target.closest('button').classList.add('active');
-            else document.querySelector(`#customHabitModal [data-range="${range}"]`).classList.add('active');
-        }
-
-        function saveCustomHabit() {
-            const name = document.getElementById('customHabitName').value.trim();
-            if (!name) {
-                alert('Nama kebiasaan wajib diisi');
-                return;
-            }
-            const icon = (document.getElementById('customHabitIcon').value || '🎯').trim();
-            const color = customHabitState.color || { class: 'bg-purple-500', hex: '#a855f7' };
-
-            const newHabit = {
-                id: Date.now(),
-                name,
-                icon,
-                color: color.class,
-                colorHex: color.hex,
-                streak: 0,
-                completions: {},
-                meta: {
-                    desc: document.getElementById('customHabitDesc').value.trim(),
-                    group: document.getElementById('customHabitGroup').value.trim(),
-                    type: customHabitState.type,
-                    period: document.getElementById('customHabitPeriod').value,
-                    goalPerDay: parseInt(document.getElementById('customHabitGoal').value || '1', 10),
-                    days: [...customHabitState.days],
-                    timeRange: customHabitState.timeRange,
-                    reminder: document.getElementById('customHabitReminder').checked,
-                    memoAfter: document.getElementById('customHabitMemo').checked,
-                    chart: document.getElementById('customHabitChart').value,
-                    start: document.getElementById('customHabitStart').value,
-                    end: document.getElementById('customHabitEnd').value
-                }
-            };
-            if (customHabitState.editingHabitId) {
-                const idx = habits.findIndex(h => h.id === customHabitState.editingHabitId);
-                if (idx !== -1) {
-                    // pertahankan completions & streak jika ada
-                    newHabit.id = habits[idx].id;
-                    newHabit.completions = habits[idx].completions || {};
-                    newHabit.streak = calculateStreak(newHabit.completions);
-                    habits[idx] = newHabit;
-                }
-                customHabitState.editingHabitId = null;
-            } else {
-                habits.push(newHabit);
-            }
-            closeCustomHabitModal();
-            renderHabits();
-            updateStats();
-        }
-
-        function closeCustomHabitModal() {
-            const modal = document.getElementById('customHabitModal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function closeCustomHabitOnBackdrop(event) {
-            if (event.target.id === 'customHabitModal') closeCustomHabitModal();
-        }
-
-        // ====== Habit Detail Logic ======
-        let currentDetailHabitId = null;
-
-        function openHabitDetail(habitId) {
-            currentDetailHabitId = habitId;
-            document.getElementById('habitDetailModal').classList.remove('hidden');
-            renderHabitDetail();
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function closeHabitDetail() {
-            document.getElementById('habitDetailModal').classList.add('hidden');
-            currentDetailHabitId = null;
-        }
-
-        function closeHabitDetailOnBackdrop(event) {
-            if (event.target.id === 'habitDetailModal') closeHabitDetail();
-        }
-
-        function calculateBestStreak(completions) {
-            const dates = Object.keys(completions || {}).filter(d => completions[d]).sort();
-            let best = 0, cur = 0, prev = null;
-            for (const d of dates) {
-                if (prev) {
-                    const prevDate = new Date(prev);
-                    const curDate = new Date(d);
-                    const diff = (curDate - prevDate) / (1000*60*60*24);
-                    if (diff === 1) cur += 1; else cur = 1;
-                } else {
-                    cur = 1;
-                }
-                best = Math.max(best, cur);
-                prev = d;
-            }
-            return best;
-        }
-
-        function renderHabitDetail() {
-            const container = document.getElementById('habitDetailContent');
-            const habit = habits.find(h => h.id === currentDetailHabitId);
-            if (!habit || !container) return;
-
-            const now = new Date();
-            const monthLabel = now.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
-            const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay(); // 0=Min
-
-            // Build calendar grid
-            const weekHeaders = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-            let calHtml = '<div class="calendar-grid">' + weekHeaders.map(d=>`<div class="calendar-header">${d}</div>`).join('') + '</div>';
-            let grid = '<div class="calendar-grid">';
-            const pad = (firstDay + 6) % 7 === 6 ? 0 : (firstDay); // using 0=Min aligns to our headers
-            for (let i=0;i<pad;i++) grid += '<div class="calendar-day"></div>';
-            let doneInMonth = 0;
-            for (let day=1; day<=daysInMonth; day++) {
-                const date = new Date(now.getFullYear(), now.getMonth(), day);
-                const dateStr = date.toISOString().split('T')[0];
-                const done = habit.completions && habit.completions[dateStr];
-                if (done) doneInMonth++;
-                const bg = done ? habit.colorHex : 'rgba(71,85,105,0.15)';
-                grid += `<div class="calendar-day" style="background-color:${bg}">${day}</div>`;
-            }
-            grid += '</div>';
-
-            const totalDone = Object.keys(habit.completions || {}).filter(k => habit.completions[k]).length;
-            const currentStreak = calculateStreak(habit.completions || {});
-            const bestStreak = calculateBestStreak(habit.completions || {});
-
-            container.innerHTML = `
-                <div class="analytics-section" style="margin-top:4px;">
-                    <h2 class="section-header">
-                        <span style="font-size:1.2rem; margin-right:8px;">${habit.icon}</span>
-                        ${habit.name}
-                    </h2>
-                    <div style="color:#94a3b8; margin-top:-6px;">Kalender ${monthLabel}</div>
-                    ${calHtml}
-                    ${grid}
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><h3 class="insight-label">Selesai di ${now.toLocaleDateString('id-ID', { month: 'long' })}</h3><div class="insight-value">${doneInMonth}</div></div>
-                    <div class="stat-card"><h3 class="insight-label">Total Selesai</h3><div class="insight-value">${totalDone}</div></div>
-                    <div class="stat-card"><h3 class="insight-label">Streak Saat Ini</h3><div class="insight-value">${currentStreak}</div></div>
-                    <div class="stat-card"><h3 class="insight-label">Streak Terbaik</h3><div class="insight-value">${bestStreak}</div></div>
-                </div>
-                <div style="display:flex; gap:8px; justify-content:flex-end; padding-top:8px;">
-                    <button class="btn btn-primary" onclick="editHabit(${habit.id})">Edit</button>
-                    <button class="btn btn-cancel" onclick="deleteHabit(${habit.id})">Hapus</button>
-                </div>
-            `;
-        }
-
-        function editHabit(habitId) {
-            const habit = habits.find(h => h.id === habitId);
-            if (!habit) return;
-            closeHabitDetail();
-            document.getElementById('customHabitModal').classList.remove('hidden');
-            initCustomHabitForm();
-            customHabitState.editingHabitId = habit.id;
-            document.getElementById('customHabitName').value = habit.name;
-            document.getElementById('customHabitIcon').value = habit.icon;
-            document.getElementById('customHabitGroup').value = (habit.meta && habit.meta.group) || '';
-            customHabitState.color = { class: habit.color, hex: habit.colorHex };
-            setCustomHabitType((habit.meta && habit.meta.type) || 'build');
-            document.getElementById('customHabitPeriod').value = (habit.meta && habit.meta.period) || 'day';
-            document.getElementById('customHabitGoal').value = (habit.meta && habit.meta.goalPerDay) || 1;
-            document.getElementById('customHabitChart').value = (habit.meta && habit.meta.chart) || 'bar';
-            document.getElementById('customHabitStart').value = (habit.meta && habit.meta.start) || new Date().toISOString().split('T')[0];
-            document.getElementById('customHabitEnd').value = (habit.meta && habit.meta.end) || '';
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function deleteHabit(habitId) {
-            if (!confirm('Hapus kebiasaan ini?')) return;
-            habits = habits.filter(h => h.id !== habitId);
-            closeHabitDetail();
-            renderHabits();
-            updateStats();
-        }
-
-        // AI Insights
-        function showInsights() {
-            generateAIInsights();
-            document.getElementById('insightsModal').classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 0);
-        }
-
-        function closeInsights() {
-            document.getElementById('insightsModal').classList.add('hidden');
-        }
-
-        function closeInsightsOnBackdrop(event) {
-            if (event.target.id === 'insightsModal') {
-                closeInsights();
-            }
-        }
-
-        function generateAIInsights() {
-            if (habits.length === 0) {
-                 document.getElementById('insightCompletionRate').textContent = '0%';
-                 document.getElementById('insightDetail').textContent = `0 dari 0 dalam 7 hari terakhir`;
-                 document.getElementById('insightAvgStreak').textContent = '0';
-                 document.getElementById('insightBestHabit').textContent = `Belum ada kebiasaan`;
-                 document.getElementById('correlationsList').innerHTML = `<p class="correlation-item">Data belum cukup untuk korelasi.</p>`;
-                 document.getElementById('recommendationsList').innerHTML = `<p class="recommendation-item">Tambahkan kebiasaan untuk mendapatkan rekomendasi AI.</p>`;
-                 return;
-            }
-
-            const last7Days = getLast7Days();
-            let totalCompletions = 0;
-            
-            habits.forEach(habit => {
-                last7Days.forEach(day => {
-                    if (habit.completions && habit.completions[day.date]) totalCompletions++;
-                });
-            });
-            
-            const completionRate = ((totalCompletions / (habits.length * 7)) * 100).toFixed(1);
-            const bestHabit = habits.reduce((best, habit) => (habit.streak > best.streak ? habit : best), habits[0]);
-            const avgStreak = (habits.reduce((sum, h) => sum + h.streak, 0) / habits.length).toFixed(1);
-            
-            document.getElementById('insightCompletionRate').textContent = completionRate + '%';
-            document.getElementById('insightDetail').textContent = `${totalCompletions} dari ${habits.length * 7} dalam 7 hari terakhir`;
-            document.getElementById('insightAvgStreak').textContent = avgStreak;
-            document.getElementById('insightBestHabit').textContent = `Terbaik: ${bestHabit.name} (${bestHabit.streak} hari)`;
-            
-            // Correlations
-            const correlations = [
-                { habits: ['Olahraga Pagi', 'Tidur Lebih Awal'], correlation: 0.85 },
-                { habits: ['Membaca 30 menit', 'Meditasi'], correlation: 0.72 }
-            ];
-            
-            document.getElementById('correlationsList').innerHTML = correlations.map(corr => `
-                <div class="correlation-item">
-                    <div class="correlation-header">
-                        <span class="correlation-text">${corr.habits.join(' ↔ ')}</span>
-                        <span class="correlation-value">${(corr.correlation * 100).toFixed(0)}% korelasi</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${corr.correlation * 100}%"></div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Recommendations
-            const recommendations = [
-                `Tingkatkan ${habits[habits.length - 1].name} - pola Anda menunjukkan potensi peningkatan 40%`,
-                `Lakukan ${bestHabit.name} lebih awal untuk boost energi harian`,
-                `Kombinasikan meditasi dengan exercise untuk hasil optimal`
-            ];
-            
-            document.getElementById('recommendationsList').innerHTML = recommendations.map((rec, idx) => `
-                <div class="recommendation-item">
-                    <div class="recommendation-number">${idx + 1}</div>
-                    <p class="recommendation-text">${rec}</p>
-                </div>
-            `).join('');
-        }
-
-        // Initialize
-        window.addEventListener('DOMContentLoaded', function() {
-            lucide.createIcons();
-            // Coba inisialisasi Google jika script sudah siap dan Client ID sudah diisi
-            initGoogleIfNeeded();
-            scheduleMidnightRefresh();
-        });
-
-        function scheduleMidnightRefresh() {
-            const now = new Date();
-            const next = new Date(now);
-            next.setHours(24,0,0,0); // next midnight
-            const ms = next - now;
-            setTimeout(() => {
-                // Refresh views to follow real-time date
-                renderHabits();
-                updateStats();
-                if (currentView === 'analytics') renderAnalytics();
-                if (currentView === 'calendar') renderCalendar();
-                if (typeof currentDetailHabitId === 'number') renderHabitDetail();
-                // reschedule for following day
-                scheduleMidnightRefresh();
-            }, ms);
-        }
-    </script>
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+    <script src="openai-client.js"></script>
+    <script src="Neuro.js"></script>
 </body>
 </html>
