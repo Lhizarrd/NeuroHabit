@@ -1,0 +1,28 @@
+# Environment Variables (JANGAN PUSH API KEY!)
+.env
+.env.local
+.env.*.local
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Build & Dist
+dist/
+build/
+
+# Logs
+logs/
+*.log

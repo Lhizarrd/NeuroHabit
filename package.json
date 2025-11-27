@@ -1,15 +1,33 @@
 {
   "name": "neurohabit-ai",
   "version": "1.0.0",
+  "description": "AI-powered habit tracking and analytics PWA application",
   "private": true,
   "type": "module",
+  "main": "openai-server.js",
   "scripts": {
-    "dev": "node openai-server.js"
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "pwa": "node backend/server.js",
+    "server": "node backend/server.js"
   },
+  "keywords": [
+    "habit",
+    "tracking",
+    "analytics",
+    "ai",
+    "openai"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mime-types": "^3.0.2",
     "openai": "^4.59.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

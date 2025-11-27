@@ -1,0 +1,91 @@
+# 🚀 NeuroHabit - Mulai di Sini (30 detik setup)
+
+## 📌 TL;DR (Yang Perlu Diketahui)
+
+**Masalah lama:** Perlu 2 terminal untuk `npm start` + `npm run pwa`
+**Solusi baru:** `npm start` doang, semua jalan!
+
+---
+
+## ⚡ Setup Cepat (5 menit)
+
+### 1️⃣ Buat file `.env` di folder proyek
+```env
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxx
+OPENAI_MODEL=gpt-4o-mini
+PORT=3000
+HOSTNAME=localhost
+```
+👉 Dapatkan API Key: https://platform.openai.com/api-keys
+
+### 2️⃣ Jalankan
+```bash
+npm start
+```
+
+### 3️⃣ Buka browser
+```
+http://localhost:3000
+```
+
+**DONE!** ✅ AI sudah jalan!
+
+---
+
+## 🎯 Cara Menjalankan
+
+### Option A: Terminal Command (Paling Simple)
+```bash
+npm start
+```
+
+### Option B: Windows Double-Click
+- Cari file: `start-server.bat`
+- Double-click
+- Done!
+
+### Option C: Auto-Start saat Komputer Nyala
+1. Copy file `NeuroHabit-Startup.bat`
+2. Paste ke: `C:\Users\{USERNAME}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+3. Restart komputer
+4. Server auto-start! 🚀
+
+---
+
+## ❓ Ada Error?
+
+### Error: "OPENAI_API_KEY tidak terpasang"
+→ Buat file `.env` dengan API key Anda
+
+### Error: "Port 3000 sudah dipakai"
+→ Edit `.env`: `PORT=3001`
+
+### Lainnya?
+→ Baca file: `WINDOWS-SETUP.md`
+
+---
+
+## 📚 Dokumentasi Lengkap
+
+| File | Untuk |
+|------|-------|
+| `QUICK-START.md` | Setup detail + troubleshooting |
+| `WINDOWS-SETUP.md` | Windows user step-by-step |
+| `SETUP-AUTO-START.md` | Setup auto-startup |
+| `SOLUTION-SUMMARY.md` | Detail teknis |
+| `README-START-HERE.md` | Index semua dokumentasi |
+
+---
+
+## ✅ Checklist
+
+- [ ] File `.env` dibuat
+- [ ] `npm start` berjalan
+- [ ] Browser bisa akses http://localhost:3000
+- [ ] Interface NeuroHabit muncul
+- [ ] Selesai! 🎉
+
+---
+
+**Dibuat:** 27 November 2025
+**Status:** ✅ Siap Pakai
